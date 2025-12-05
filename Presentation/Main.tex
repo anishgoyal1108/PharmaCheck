@@ -1,0 +1,948 @@
+\documentclass[t,aspectratio=169,xcolor=dvipsnames]{beamer}
+\usefonttheme{professionalfonts}
+\usetheme{SimplePlusAIC}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and  \bottomrule in tables
+% \usepackage{svg} % Removed - using PDF for logo instead
+\usepackage{tikz}
+\usepackage{makecell}
+\newcommand*{\defeq}{\stackrel{\text{def}}{=}}
+\usepackage{setspace}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\usepackage{textgreek}
+\usepackage{amsmath}
+\usepackage{ragged2e}
+\usepackage{listings}
+\usepackage{xfrac}
+\usepackage[nice]{nicefrac}
+\usepackage[loose]{units}
+\usepackage{braket}
+\usepackage{physics}
+\usepackage{textcomp} % Replacing gensymb for symbols like \micro and \perthousand
+\usepackage[cm]{sfmath}
+\usepackage{bm}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{hyperref}
+\usepackage[style=ieee]{citation-style-language}
+\addbibresource{references.bib}
+\setbeamercovered{transparent}
+\beamerdefaultoverlayspecification{<+->}
+\setbeamertemplate{blocks}[rounded][shadow] % block options
+\usepackage[svgnames,table]{xcolor}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\arrayrulecolor{black}
+\setlength{\arrayrulewidth}{0.20mm}
+\renewcommand{\arraystretch}{1.40}  % stretch tables row size
+\tracinglostchars=0
+
+%================================================
+%	TITLE PAGE
+%================================================
+\title[PharmaCheck]{PharmaCheck} 
+\subtitle{Drug Interaction Database System}
+
+\author[Goyal]{\texorpdfstring{Anish Goyal}{Anish Goyal}}
+\institute[GSU]{Department of Computer Science \\ Georgia Southern University \\ Statesboro, GA \\ }
+
+\date{\textcolor{nyublue}{\today}}
+
+%================================================
+%	BEGIN DOCUMENT 
+%================================================
+\begin{document}
+\nocite{*}
+
+%------------------------------------------------
+%	TITLE SLIDE
+%------------------------------------------------
+\settitlepagebackground
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+\resetbackground
+
+%------------------------------------------------
+%	OUTLINE SLIDES (2 slides)
+%------------------------------------------------
+{
+\beamerdefaultoverlayspecification{}
+\begin{frame}[plain]
+    \frametitle{Outline (1/2)}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{spacing}{1.4}
+                \tableofcontents[sections={1-2}]
+            \end{spacing}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{spacing}{1.4}
+                \tableofcontents[sections={3-4}]
+            \end{spacing}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[plain]
+    \frametitle{Outline (2/2)}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{spacing}{1.4}
+                \tableofcontents[sections={5-6}]
+            \end{spacing}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{spacing}{1.4}
+                \tableofcontents[sections={7-9}]
+            \end{spacing}
+        \end{column}
+    \end{columns}
+\end{frame}
+}
+
+%================================================
+%	SECTION 1: INTRODUCTION
+%================================================
+\setsectioncontent{Personal motivation, the need for drug interaction systems, and project overview.}
+\section{Introduction}
+
+\subsection{Personal Motivation}
+\begin{frame}
+    \frametitle{Personal Motivation}
+    \framesubtitle{Why this project matters to me}
+    
+    \begin{itemize}
+        \item This semester, I received a cancer diagnosis
+        \item Treatment required managing multiple medications simultaneously
+        \item Witnessed firsthand how doctors track complex drug interactions internally
+        \item Realized patients often lack visibility into potential medication conflicts
+        \item Inspired to build an accessible system for drug interaction awareness
+    \end{itemize}
+\end{frame}
+
+\subsection{The Need}
+\begin{frame}
+    \frametitle{The Need}
+    \framesubtitle{Why drug interaction systems matter}
+    
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{itemize}
+                \item Drug interactions cause 100,000+ hospitalizations annually in the US
+                \item Patients often take 5+ medications simultaneously
+                \item Healthcare providers use internal systems not accessible to patients
+                \item Existing public tools lack transparency and real-time accuracy
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            % FIGURE: Add statistics graphic here
+            \begin{block}{Key Statistics}
+                \begin{itemize}
+                    \item 82\% of Americans take at least 1 medication
+                    \item 29\% take 5+ medications
+                    \item Drug interactions are the 4th leading cause of death
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Project Overview}
+\begin{frame}
+    \frametitle{Project Overview}
+    \framesubtitle{What is PharmaCheck?}
+    
+    \begin{columns}
+        \begin{column}{0.65\textwidth}
+            \begin{itemize}
+                \item \textbf{PharmaCheck}: A web-based drug interaction checking platform
+                \item Built with MySQL database, Flask backend, and modern HTML/CSS/JS frontend
+                \item Real-time web scraping from Drugs.com for up-to-date information
+                \item AI-powered translation of professional descriptions to patient-friendly language
+                \item Doctor-patient relationship management for oversight
+                \item Comprehensive search history tracking
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.35\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{../Logo.pdf}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.2cm}
+    \centering
+    \includegraphics[width=0.35\textwidth]{figures/tech_stack.png}
+\end{frame}
+
+%================================================
+%	SECTION 2: STAGE 2 - PROJECT PROPOSAL
+%================================================
+\setsectioncontent{Initial planning, ER diagram design, and Beta I conception.}
+\section{Stage 2: Project Proposal}
+
+\subsection{Beta I Conception}
+\begin{frame}
+    \frametitle{Beta I Conception}
+    \framesubtitle{Initial planning and entity identification}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Designed Entity-Relationship diagram
+                \item Identified core entities:
+                \begin{itemize}
+                    \item User (Patient/Doctor)
+                    \item Drug
+                    \item Condition
+                    \item Interaction
+                    \item SearchHistory
+                \end{itemize}
+                \item Mapped relationships between entities
+                \item Planned for real-time data acquisition
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.85\textwidth]{figures/er_diagram.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Database Design Goals}
+\begin{frame}
+    \frametitle{Database Design Goals}
+    \framesubtitle{Requirements for the system}
+    
+    \begin{itemize}
+        \item Support user accounts with distinct roles (Patient, Doctor)
+        \item Track drug interactions with severity levels (Major, Moderate, Minor)
+        \item Enable comprehensive search history for audit and review
+        \item Support doctor-patient assignments for medical oversight
+        \item Store both professional and patient-friendly descriptions
+        \item Cache AI-generated translations for performance
+    \end{itemize}
+\end{frame}
+
+%================================================
+%	SECTION 3: DATABASE DESIGN
+%================================================
+\setsectioncontent{Relational schema, normalization, and key table structures.}
+\section{Database Design}
+
+\subsection{Relational Schema}
+\begin{frame}
+    \frametitle{Relational Schema}
+    \framesubtitle{Eight core tables}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item \textbf{User} -- Authentication \& roles
+                \item \textbf{Drug} -- Medication information
+                \item \textbf{Condition} -- Medical conditions
+                \item \textbf{Interaction} -- Drug-drug interactions
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item \textbf{Drug\_Interaction} -- Junction table
+                \item \textbf{FoodInteraction} -- Food/lifestyle
+                \item \textbf{DiseaseInteraction} -- Disease interactions
+                \item \textbf{SearchHistory} -- User searches
+                \item \textbf{Doctor\_Patient} -- Assignments
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+\subsection{Normalization}
+\begin{frame}
+    \frametitle{Normalization}
+    \framesubtitle{Third Normal Form (3NF) compliance}
+    
+    \begin{itemize}
+        \item All tables satisfy Third Normal Form (3NF)
+        \item \textbf{User}: user\_id $\rightarrow$ username, password\_hash, email, role
+        \item \textbf{Drug}: drug\_id $\rightarrow$ name, generic\_name, description, condition\_id
+        \item \textbf{Interaction}: interaction\_id $\rightarrow$ severity, professional\_description, patient\_description
+        \item No transitive dependencies exist
+        \item Foreign keys ensure referential integrity with CASCADE operations
+    \end{itemize}
+\end{frame}
+
+\subsection{Key Tables}
+\begin{frame}[fragile]
+    \frametitle{Key Tables Deep Dive}
+    \framesubtitle{User and SearchHistory tables}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{User Table}
+            \begin{lstlisting}[language=SQL, basicstyle=\tiny\ttfamily]
+CREATE TABLE User (
+  user_id INT PRIMARY KEY 
+    AUTO_INCREMENT,
+  username VARCHAR(64) 
+    NOT NULL UNIQUE,
+  password_hash CHAR(60) 
+    NOT NULL,
+  email VARCHAR(255) 
+    NOT NULL UNIQUE,
+  role ENUM('PATIENT', 
+    'DOCTOR') NOT NULL
+);
+            \end{lstlisting}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{SearchHistory Table}
+            \begin{lstlisting}[language=SQL, basicstyle=\tiny\ttfamily]
+CREATE TABLE SearchHistory (
+  search_id BIGINT PRIMARY KEY 
+    AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  query TEXT NOT NULL,
+  search_type ENUM('DRUG', 
+    'CONDITION', 
+    'INTERACTION'),
+  search_data TEXT,
+  created_at DATETIME 
+    DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) 
+    REFERENCES User(user_id)
+);
+            \end{lstlisting}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%================================================
+%	SECTION 4: IMPLEMENTATION - BACKEND
+%================================================
+\setsectioncontent{Technology stack, web scraping, database integration, and AI features.}
+\section{Implementation: Backend}
+
+\subsection{Technology Stack}
+\begin{frame}
+    \frametitle{Technology Stack}
+    \framesubtitle{Backend components}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item \textbf{Database}: MySQL
+                    \begin{itemize}
+                        \item Originally planned PostgreSQL
+                        \item Switched to MySQL for compatibility
+                    \end{itemize}
+                \item \textbf{Backend}: Flask (Python)
+                \item \textbf{ORM}: SQLAlchemy
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item \textbf{Web Scraping}: BeautifulSoup
+                \item \textbf{Authentication}: JWT + bcrypt
+                \item \textbf{AI Translation}: Ollama LLM
+                \item \textbf{Data Format}: JSON APIs
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.2cm}
+    \centering
+    \includegraphics[width=0.35\textwidth]{figures/tech_stack.png}
+\end{frame}
+
+\subsection{Web Scraping System}
+\begin{frame}
+    \frametitle{Web Scraping System}
+    \framesubtitle{Real-time data acquisition from Drugs.com}
+    
+    \begin{itemize}
+        \item \textbf{DrugInteractionChecker}: Primary scraper class
+        \item \textbf{FoodInteractionScraper}: Food/lifestyle interactions
+        \item \textbf{DiseaseInteractionScraper}: Disease-related interactions
+        \item HTML parsing with BeautifulSoup
+        \item Intelligent caching to reduce redundant requests
+        \item Brand name $\rightarrow$ Generic name resolution (e.g., Valium $\rightarrow$ Diazepam)
+    \end{itemize}
+    
+    \centering
+    \includegraphics[width=0.28\textwidth]{figures/scraping_workflow.png}
+\end{frame}
+
+\subsection{Web Scraping Code}
+\begin{frame}[fragile]
+    \frametitle{Web Scraping System}
+    \framesubtitle{[CODE DEMO] scraper.py - DrugInteractionChecker}
+    
+    \vspace{0.5cm}
+    \centering
+    \textit{[DEMO: Show scraper.py in IDE]}
+    
+    \vspace{0.3cm}
+    Key methods to highlight:
+    \begin{itemize}
+        \item \texttt{get\_drug\_interactions()} -- Fetches drug-drug interactions
+        \item \texttt{get\_food\_interactions()} -- Fetches food/lifestyle interactions
+        \item \texttt{\_get\_generic\_name()} -- Resolves brand names
+    \end{itemize}
+\end{frame}
+
+\subsection{Database Integration}
+\begin{frame}[fragile]
+    \frametitle{Database Integration}
+    \framesubtitle{SQLAlchemy ORM models}
+    
+    \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+class User(Base):
+    __tablename__ = 'User'
+    
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String(64), nullable=False, unique=True)
+    password_hash = Column(String(60), nullable=False)
+    email = Column(String(255), nullable=False, unique=True)
+    role = Column(Enum('PATIENT', 'DOCTOR'), nullable=False)
+    
+    # Relationships
+    search_history = relationship('SearchHistory', back_populates='user')
+    patients = relationship('User', secondary=doctor_patient_table,
+                           primaryjoin=(user_id == doctor_patient_table.c.doctor_id),
+                           secondaryjoin=(user_id == doctor_patient_table.c.patient_id))
+    \end{lstlisting}
+    
+    \centering
+    \textit{[DEMO: Show database.py in IDE]}
+\end{frame}
+
+\subsection{API Endpoints}
+\begin{frame}
+    \frametitle{API Endpoints}
+    \framesubtitle{RESTful API design}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Authentication}
+            \begin{itemize}
+                \item POST /auth/register
+                \item POST /auth/login
+                \item GET /auth/me
+            \end{itemize}
+            
+            \textbf{Drug Search}
+            \begin{itemize}
+                \item GET /search\_drugs
+                \item GET /search\_conditions
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Interactions}
+            \begin{itemize}
+                \item POST /check\_drug\_interactions
+                \item GET /food\_interactions
+                \item GET /disease\_interactions
+            \end{itemize}
+            
+            \textbf{Doctor-Patient}
+            \begin{itemize}
+                \item GET /doctors/patients
+                \item POST /patients/request\_doctor
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \centering
+    \textit{[DEMO: Show api.py endpoints in IDE]}
+\end{frame}
+
+\subsection{AI Translation Feature}
+\begin{frame}
+    \frametitle{AI Translation Feature}
+    \framesubtitle{Ollama LLM integration}
+    
+    \begin{itemize}
+        \item Translates professional medical descriptions to patient-friendly language
+        \item Uses locally-deployed Ollama LLM (privacy-preserving)
+        \item Caches translations in database for performance
+        \item Users can toggle between professional and AI-translated views
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Before (Professional)}
+            \begin{block}{}
+                \footnotesize
+                ``Using fluoxetine together with diazePAM may increase side effects such as dizziness, drowsiness, confusion, and difficulty concentrating...''
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{After (AI Translated)}
+            \begin{block}{}
+                \footnotesize
+                ``Taking these two medications together may make you feel more dizzy or sleepy than usual. Be careful when driving...''
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%================================================
+%	SECTION 5: IMPLEMENTATION - FRONTEND
+%================================================
+\setsectioncontent{User interface design, core features, and doctor-patient views.}
+\section{Implementation: Frontend}
+
+\subsection{User Interface Design}
+\begin{frame}
+    \frametitle{User Interface Design}
+    \framesubtitle{Modern, responsive web application}
+    
+    \begin{itemize}
+        \item Built with vanilla HTML, CSS, and JavaScript
+        \item No heavy framework overhead
+        \item Flask serves static files directly
+        \item Responsive design for desktop and mobile
+        \item Clean, medical-professional aesthetic
+    \end{itemize}
+    
+    \vspace{0.2cm}
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/welcome_page.png}
+\end{frame}
+
+\subsection{Core Features}
+\begin{frame}
+    \frametitle{Core Features}
+    \framesubtitle{Drug interaction checking capabilities}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Multi-drug interaction checker (up to 5 drugs)
+                \item Autocomplete drug search
+                \item Severity-coded results (Major, Moderate, Minor)
+                \item Expandable interaction details
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Food/lifestyle interaction checker
+                \item Disease interaction checker
+                \item Search history with clickable restoration
+                \item AI translation on-demand
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.2cm}
+    \centering
+    \includegraphics[width=0.2\textwidth]{figures/drug_checker.png}
+\end{frame}
+
+\subsection{Doctor-Patient Features}
+\begin{frame}
+    \frametitle{Doctor-Patient Features}
+    \framesubtitle{Oversight and monitoring capabilities}
+    
+    \begin{itemize}
+        \item \textbf{Patient Registration}: Select a doctor during signup
+        \item \textbf{Doctor Dashboard}: View all assigned patients
+        \item \textbf{Search History Access}: Doctors can view patient search history
+        \item \textbf{Real-time Tracking}: Recent searches displayed at a glance
+        \item \textbf{Patient Control}: Patients can add/remove doctor assignments
+    \end{itemize}
+    
+    \vspace{0.2cm}
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/dashboard.png}
+\end{frame}
+
+\subsection{Patient Management View}
+\begin{frame}
+    \frametitle{Patient Management View}
+    \framesubtitle{Doctor's patient list interface}
+    
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/my_patients.png}
+\end{frame}
+
+%================================================
+%	SECTION 6: LIVE DEMONSTRATION
+%================================================
+\setsectioncontent{Live walkthrough of system features.}
+\section{Live Demonstration}
+
+\subsection{Demo: Registration}
+\begin{frame}
+    \frametitle{Demo Part 1: User Registration \& Login}
+    \framesubtitle{[LIVE DEMO]}
+    
+    \vspace{1cm}
+    \centering
+    \Large
+    \textbf{Demonstrating:}
+    
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item Creating a new patient account
+        \item Selecting a doctor from dropdown
+        \item Login authentication flow
+        \item Dashboard navigation
+    \end{itemize}
+\end{frame}
+
+\subsection{Demo: Drug Interactions}
+\begin{frame}
+    \frametitle{Demo Part 2: Drug Interaction Check}
+    \framesubtitle{[LIVE DEMO]}
+    
+    \vspace{1cm}
+    \centering
+    \Large
+    \textbf{Demonstrating:}
+    
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item Checking interactions between Prozac and Valium
+        \item Viewing severity levels (color-coded)
+        \item Expanding interaction details
+        \item Browsing through multiple interactions
+    \end{itemize}
+\end{frame}
+
+\subsection{Demo: AI Translation}
+\begin{frame}
+    \frametitle{Demo Part 3: AI Translation}
+    \framesubtitle{[LIVE DEMO]}
+    
+    \vspace{1cm}
+    \centering
+    \Large
+    \textbf{Demonstrating:}
+    
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item Clicking ``Translate to Patient-Friendly'' button
+        \item Animated loading dots during translation
+        \item Before/after description comparison
+        \item Translation caching behavior
+    \end{itemize}
+\end{frame}
+
+\subsection{Demo: Food \& Disease}
+\begin{frame}
+    \frametitle{Demo Part 4: Food \& Disease Interactions}
+    \framesubtitle{[LIVE DEMO]}
+    
+    \vspace{1cm}
+    \centering
+    \Large
+    \textbf{Demonstrating:}
+    
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item Checking food/lifestyle interactions for Diazepam
+        \item Checking disease interactions
+        \item Brand name to generic name resolution
+        \item Dashboard navigation between checkers
+    \end{itemize}
+\end{frame}
+
+\subsection{Demo: Doctor Dashboard}
+\begin{frame}
+    \frametitle{Demo Part 5: Doctor Dashboard}
+    \framesubtitle{[LIVE DEMO]}
+    
+    \vspace{1cm}
+    \centering
+    \Large
+    \textbf{Demonstrating:}
+    
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item Logging in as a doctor account
+        \item Viewing list of assigned patients
+        \item Seeing patient's recent searches at a glance
+        \item Accessing full patient search history
+    \end{itemize}
+\end{frame}
+
+%================================================
+%	SECTION 7: CHALLENGES
+%================================================
+\setsectioncontent{Technical, design, and UI/UX challenges encountered during development.}
+\section{Challenges \& Solutions}
+
+\subsection{Technical Challenges}
+\begin{frame}
+    \frametitle{Technical Challenges}
+    \framesubtitle{Backend and scraping issues}
+    
+    \begin{itemize}
+        \item \textbf{HTML Structure Changes}: Drugs.com format evolved during development
+            \begin{itemize}
+                \item Solution: Robust parsing with multiple fallback selectors
+            \end{itemize}
+        \item \textbf{Brand Name Resolution}: Prozac $\neq$ Fluoxetine in URLs
+            \begin{itemize}
+                \item Solution: Implemented \texttt{\_get\_generic\_name()} lookup
+            \end{itemize}
+        \item \textbf{Performance}: Initial scraping took 2+ minutes
+            \begin{itemize}
+                \item Solution: Caching mechanism with \texttt{use\_cache=True}
+            \end{itemize}
+        \item \textbf{Python Indentation Errors}: Inconsistent formatting
+            \begin{itemize}
+                \item Solution: Careful code review and syntax checking
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{Design Challenges}
+\begin{frame}
+    \frametitle{Design Challenges}
+    \framesubtitle{Architecture and schema evolution}
+    
+    \begin{itemize}
+        \item \textbf{Schema Evolution}: Added FoodInteraction and DiseaseInteraction tables mid-development
+        \item \textbf{Search History}: Implementing clickable restoration required storing full JSON results
+        \item \textbf{Doctor-Patient Flow}: Original design had doctors adding patients
+            \begin{itemize}
+                \item Reversed to: Patients request doctor oversight
+            \end{itemize}
+        \item \textbf{File Protocol Issues}: Direct file:// serving broke navigation
+            \begin{itemize}
+                \item Solution: Flask serves all static files via HTTP
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{UI/UX Challenges}
+\begin{frame}
+    \frametitle{UI/UX Challenges}
+    \framesubtitle{Frontend polish and user experience}
+    
+    \begin{itemize}
+        \item \textbf{Logo Display}: SVG logo appeared as white rectangle on some pages
+            \begin{itemize}
+                \item Solution: Removed brightness/invert CSS filters
+            \end{itemize}
+        \item \textbf{Dropdown State}: Cards collapsed after AI translation
+            \begin{itemize}
+                \item Solution: Re-expand card after render using index tracking
+            \end{itemize}
+        \item \textbf{Multi-Selector}: Comma-separated input was error-prone
+            \begin{itemize}
+                \item Solution: Tag-based multi-selector with autocomplete
+            \end{itemize}
+        \item \textbf{Loading States}: No feedback during long operations
+            \begin{itemize}
+                \item Solution: Animated loading dots CSS animation
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%================================================
+%	SECTION 8: BETA I ACHIEVEMENTS
+%================================================
+\setsectioncontent{First working system achievements and metrics.}
+\section{Beta I: First Working System}
+
+\subsection{Achievements}
+\begin{frame}
+    \frametitle{Beta I Achievements}
+    \framesubtitle{First working version milestones}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Fully functional MySQL database with 8+ tables
+                \item Complete web scraping pipeline
+                \item Working AI translation feature
+                \item JWT-based authentication system
+                \item Role-based access control
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Doctor-patient relationship management
+                \item Three interaction checkers (Drug, Food, Disease)
+                \item Search history with restoration
+                \item Responsive web interface
+                \item Real-time data from Drugs.com
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+\subsection{Data Import}
+\begin{frame}
+    \frametitle{Data Import Process}
+    \framesubtitle{Populating the database with drugs and conditions}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{figures/import_data_1.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Imported \textbf{2,123 conditions} from conditions.json
+                \item Imported \textbf{15,773 drugs} from drugs.json
+                \item Batch processing with progress feedback
+                \item Data sourced from Drugs.com API
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Metrics}
+\begin{frame}
+    \frametitle{Beta I Metrics}
+    \framesubtitle{Project statistics}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Codebase Size}
+            \begin{itemize}
+                \item \textbf{api.py}: 1,115 lines
+                \item \textbf{scraper.py}: 927 lines
+                \item \textbf{database.py}: 351 lines
+                \item \textbf{auth.py}: 303 lines
+                \item Frontend: 1,500+ lines (HTML/CSS/JS)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Data Coverage}
+            \begin{itemize}
+                \item \textbf{15,775} drugs in database
+                \item \textbf{2,126} medical conditions
+                \item Real-time access to all Drugs.com interactions
+                \item Support for food and disease interactions
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%================================================
+%	SECTION 9: FUTURE WORK
+%================================================
+\setsectioncontent{Planned enhancements and technical improvements.}
+\section{Future Work}
+
+\subsection{Planned Enhancements}
+\begin{frame}
+    \frametitle{Planned Enhancements}
+    \framesubtitle{Feature roadmap}
+    
+    \begin{itemize}
+        \item \textbf{Doctor-Patient Communication}: Direct messaging system
+        \item \textbf{Medication Reminders}: Scheduled notifications
+        \item \textbf{Prescription Management}: Track current prescriptions
+        \item \textbf{Drug Allergy Tracking}: Alert on known allergens
+        \item \textbf{Enhanced Patient Profiles}: Medical history, demographics
+        \item \textbf{Doctor Notes}: Add annotations to patient interactions
+    \end{itemize}
+\end{frame}
+
+\subsection{Technical Improvements}
+\begin{frame}
+    \frametitle{Technical Improvements}
+    \framesubtitle{Infrastructure and performance}
+    
+    \begin{itemize}
+        \item \textbf{Background Job Queue}: Async scraping with Celery
+        \item \textbf{Full-Text Search}: Elasticsearch integration
+        \item \textbf{Mobile Application}: React Native or Flutter app
+        \item \textbf{PDF Reports}: Export search history as reports
+        \item \textbf{Pharmacy Integration}: Connect with pharmacy systems
+        \item \textbf{Analytics Dashboard}: Patient adherence tracking for doctors
+    \end{itemize}
+\end{frame}
+
+%================================================
+%	CONCLUSION
+%================================================
+\subsection{Conclusion}
+\begin{frame}
+    \frametitle{Conclusion}
+    \framesubtitle{Project summary}
+    
+    \begin{itemize}
+        \item Successfully built an end-to-end drug interaction checking system
+        \item Implements real-time web scraping with intelligent caching
+        \item AI-powered translation makes medical information accessible
+        \item Doctor-patient features enable professional oversight
+        \item Personal goal achieved: Building a tool I would have wanted during treatment
+        \item Potential for real-world impact in patient medication safety
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    \centering
+    \Large
+    \textbf{Thank you!}
+\end{frame}
+
+%================================================
+%	FINAL DEMO
+%================================================
+\begin{frame}
+    \frametitle{Complete System Demonstration}
+    \framesubtitle{Full walkthrough}
+    
+    \vspace{1cm}
+    \centering
+    \Huge
+    \textbf{[LIVE DEMO]}
+    
+    \vspace{0.5cm}
+    \Large
+    Complete walkthrough of PharmaCheck
+    
+    \vspace{0.5cm}
+    \normalsize
+    \url{http://localhost:5000}
+\end{frame}
+
+%================================================
+%	REFERENCES
+%================================================
+\beamerdefaultoverlayspecification{}
+\begin{frame}[plain]
+    \frametitle{References}
+    \printbibliography
+\end{frame}
+
+\conclusionpage
+\end{document}

@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+
+# Environment
+.env
+
+# Stage PDFs (not for public repo)
+Stage 2.pdf
+Stage 3.pdf
+Stage 4.pdf
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.run.xml
+*.ccf
+
+# Quarto
+/.quarto/
+*_files/
+
+# Keep these LaTeX outputs
+!Presentation/Main.pdf
+!Report/goyal_pharmacheck_report.pdf
+

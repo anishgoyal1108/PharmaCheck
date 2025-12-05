@@ -1,0 +1,779 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod,
+  openany]{scrartcl}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmonofont[Scale=1.0]{Source Code Pro}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\addtokomafont{disposition}{\rmfamily}
+\usepackage{amsmath, xparse}
+\usepackage{fancyvrb, fvextra}
+\usepackage{listings}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage[table,x11names]{xcolor}
+\usepackage{bm}
+\usepackage{caption}
+\definecolor{cornflower}{rgb}{0.12549, 0.29020, 0.52941}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\author{}
+\date{}
+\begin{document}
+
+\input{./title.tex}
+\clearpage
+
+\renewcommand*\contentsname{Table of Contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+
+\listoffigures
+\clearpage
+
+\section{Introduction}\label{introduction}
+
+This semester I received a cancer diagnosis. Treatment required managing
+multiple medications simultaneously. I witnessed firsthand how doctors
+track complex drug interactions using internal hospital systems.
+Patients like me often lack visibility into potential medication
+conflicts. This experience inspired me to build an accessible system for
+drug interaction awareness.
+
+Drug interactions cause over 100,000 hospitalizations annually in the
+United States. According to recent statistics, 82\% of Americans take at
+least one medication. 29\% take five or more medications daily. Drug
+interactions rank as the fourth leading cause of death in the US.
+Healthcare providers use proprietary internal systems that patients
+cannot access. Existing public tools lack transparency and real-time
+accuracy.
+
+PharmaCheck is a database-managed web application that integrates
+artificial intelligence and advanced indexing to identify adversarial
+drug interactions in patients. I built this platform to address the gap
+between professional medical systems and patient needs. The system
+provides real-time drug interaction checking, food and lifestyle
+interaction warnings, disease interaction alerts, and AI-powered
+translation of medical terminology.
+
+The main components of PharmaCheck include a MySQL relational database
+storing drugs, conditions, and interaction data. A Flask backend serves
+a RESTful API for all operations. The frontend uses vanilla HTML, CSS,
+and JavaScript without heavy framework overhead. A web scraping system
+fetches real-time data from Drugs.com. An Ollama large language model
+translates professional descriptions into patient-friendly language. A
+doctor-patient relationship system enables medical oversight. A
+comprehensive search history feature allows users to revisit previous
+queries.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{./img/tech_stack.png}
+
+}
+
+\caption{\label{fig-tech-stack}Technology stack showing MySQL, Flask,
+and frontend components}
+
+\end{figure}%
+
+Figure~\ref{fig-tech-stack} shows the technology stack I chose for
+PharmaCheck. MySQL provides reliable relational storage. Flask offers a
+lightweight Python web framework. The frontend prioritizes simplicity
+and performance.
+
+\clearpage
+
+\section{Database Details}\label{database-details}
+
+I designed the database schema through careful entity-relationship
+modeling. The design process began with identifying core entities:
+users, drugs, conditions, and interactions. I mapped relationships
+between these entities and planned for real-time data acquisition from
+external sources.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{./img/er_diagram.png}
+
+}
+
+\caption{\label{fig-er-diagram}Entity-Relationship diagram for
+PharmaCheck}
+
+\end{figure}%
+
+Figure~\ref{fig-er-diagram} shows the ER model I created during the
+initial design phase. The model captures users with distinct roles,
+drugs with their properties, conditions they treat, and various types of
+interactions between drugs.
+
+The final schema contains nine tables. The User table stores
+authentication credentials and role information. Each user has a unique
+identifier, username, password hash, email, and role designation as
+either PATIENT or DOCTOR. The Drug table contains medication information
+including name, generic name, description, URL reference, and an
+optional foreign key to the Condition table. The Condition table stores
+medical conditions with names, descriptions, and URLs. The Interaction
+table captures drug-drug interaction details including severity level,
+professional description, patient description, and cached AI-generated
+description.
+
+I created a junction table called Drug\_Interaction to handle the
+many-to-many relationship between drugs and interactions. This table
+contains foreign keys to both the Drug and Interaction tables along with
+the name of the interacting drug. The FoodInteraction table stores food
+and lifestyle interactions with severity, hazard level, plausibility
+rating, and descriptions. The DiseaseInteraction table follows a similar
+structure for disease-related interactions. The SearchHistory table logs
+all user searches with timestamps, query text, search type, and full
+JSON results for restoration. The Doctor\_Patient table manages the
+many-to-many relationship between doctors and their patients.
+
+The functional dependencies in each table follow Third Normal Form
+requirements. For the User table: user\_id determines username,
+password\_hash, email, role, created\_at, and updated\_at. For the Drug
+table: drug\_id determines name, generic\_name, description, url,
+condition\_id, created\_at, and updated\_at. For the Interaction table:
+interaction\_id determines severity, professional\_description,
+patient\_description, ai\_description, url, created\_at, and
+updated\_at. For SearchHistory: search\_id determines user\_id, query,
+search\_type, search\_data, and created\_at.
+
+All tables satisfy Third Normal Form. No transitive dependencies exist
+because all non-key attributes depend directly on the primary key. I
+avoided storing derived data. Each attribute represents a single fact
+about the entity identified by the primary key.
+
+I implemented several constraint types to maintain data integrity.
+Primary keys use auto-incrementing integers for efficient indexing.
+Foreign keys include CASCADE rules for both UPDATE and DELETE
+operations. When a user deletes their account, all related search
+history entries delete automatically. The UNIQUE constraint applies to
+username and email fields in the User table to prevent duplicates. NOT
+NULL constraints ensure required fields always contain values. ENUM
+types restrict the role field to PATIENT or DOCTOR values and the
+severity field to Major, Moderate, Minor, or Unknown values.
+
+The following SQL shows the User table definition:
+
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\KeywordTok{CREATE} \KeywordTok{TABLE} \FunctionTok{User}\NormalTok{ (}
+\NormalTok{    user\_id }\DataTypeTok{INT} \KeywordTok{PRIMARY} \KeywordTok{KEY}\NormalTok{ AUTO\_INCREMENT,}
+\NormalTok{    username }\DataTypeTok{VARCHAR}\NormalTok{(}\DecValTok{64}\NormalTok{) }\KeywordTok{NOT} \KeywordTok{NULL} \KeywordTok{UNIQUE}\NormalTok{,}
+\NormalTok{    password\_hash }\DataTypeTok{CHAR}\NormalTok{(}\DecValTok{60}\NormalTok{) }\KeywordTok{NOT} \KeywordTok{NULL}\NormalTok{,}
+\NormalTok{    email }\DataTypeTok{VARCHAR}\NormalTok{(}\DecValTok{255}\NormalTok{) }\KeywordTok{NOT} \KeywordTok{NULL} \KeywordTok{UNIQUE}\NormalTok{,}
+    \KeywordTok{role}\NormalTok{ ENUM(}\StringTok{\textquotesingle{}PATIENT\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}DOCTOR\textquotesingle{}}\NormalTok{) }\KeywordTok{NOT} \KeywordTok{NULL}\NormalTok{,}
+\NormalTok{    created\_at DATETIME }\KeywordTok{NOT} \KeywordTok{NULL} \KeywordTok{DEFAULT} \FunctionTok{CURRENT\_TIMESTAMP}\NormalTok{,}
+\NormalTok{    updated\_at DATETIME }\KeywordTok{NOT} \KeywordTok{NULL} \KeywordTok{DEFAULT} \FunctionTok{CURRENT\_TIMESTAMP} 
+        \KeywordTok{ON} \KeywordTok{UPDATE} \FunctionTok{CURRENT\_TIMESTAMP}
+\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+The SearchHistory table definition includes the search\_data column for
+storing complete JSON results:
+
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\KeywordTok{CREATE} \KeywordTok{TABLE}\NormalTok{ SearchHistory (}
+\NormalTok{    search\_id BIGINT }\KeywordTok{PRIMARY} \KeywordTok{KEY}\NormalTok{ AUTO\_INCREMENT,}
+\NormalTok{    user\_id }\DataTypeTok{INT} \KeywordTok{NOT} \KeywordTok{NULL}\NormalTok{,}
+    \KeywordTok{query}\NormalTok{ TEXT }\KeywordTok{NOT} \KeywordTok{NULL}\NormalTok{,}
+\NormalTok{    search\_type ENUM(}\StringTok{\textquotesingle{}DRUG\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}CONDITION\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}INTERACTION\textquotesingle{}}\NormalTok{, }
+        \StringTok{\textquotesingle{}FOOD\_INTERACTION\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}DISEASE\_INTERACTION\textquotesingle{}}\NormalTok{) }\KeywordTok{DEFAULT} \StringTok{\textquotesingle{}DRUG\textquotesingle{}}\NormalTok{,}
+\NormalTok{    search\_data TEXT,}
+\NormalTok{    created\_at DATETIME }\KeywordTok{NOT} \KeywordTok{NULL} \KeywordTok{DEFAULT} \FunctionTok{CURRENT\_TIMESTAMP}\NormalTok{,}
+    \KeywordTok{FOREIGN} \KeywordTok{KEY}\NormalTok{ (user\_id) }\KeywordTok{REFERENCES} \FunctionTok{User}\NormalTok{(user\_id)}
+        \KeywordTok{ON} \KeywordTok{UPDATE} \KeywordTok{CASCADE} \KeywordTok{ON} \KeywordTok{DELETE} \KeywordTok{CASCADE}\NormalTok{,}
+    \KeywordTok{INDEX}\NormalTok{ idx\_search\_user (user\_id),}
+    \KeywordTok{INDEX}\NormalTok{ idx\_search\_created (created\_at)}
+\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+I added indexes on frequently queried columns. The drug name and generic
+name columns have indexes for fast autocomplete searches. The search
+history table has indexes on user\_id and created\_at for efficient
+retrieval of recent searches. Full-text indexes on drug and condition
+names support future advanced search features.
+
+\clearpage
+
+\section{Functionality Details}\label{functionality-details}
+
+I implemented both basic and advanced functions in PharmaCheck. The
+basic functions handle user authentication, drug searching, and simple
+interaction checks. The advanced functions provide multi-drug analysis,
+AI translation, and doctor-patient management.
+
+User registration accepts a username, email, password, and role
+selection. Patients can optionally select a doctor during registration
+for immediate oversight assignment. The system hashes passwords using
+bcrypt before storage. Upon successful registration, the API returns a
+JWT token for subsequent authenticated requests. Login accepts username
+or email with password verification. The JWT token expires after a
+configurable duration, defaulting to one hour.
+
+Drug search uses database-backed autocomplete. When you type at least
+two characters, the system queries the Drug table using prefix matching.
+The database contains 15,775 drugs imported from Drugs.com. If the
+database returns no matches, the system falls back to a JSON file
+search. Results return drug names, URLs, and generic names when
+available.
+
+The multi-drug interaction checker accepts up to five drugs
+simultaneously. For each drug in the list, the system fetches
+interactions from Drugs.com and checks if other drugs in your list
+appear in the interaction results. The checker uses both exact string
+matching and fuzzy matching with Levenshtein distance to catch
+variations in drug naming. The following pseudocode describes the core
+logic:
+
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\ControlFlowTok{for}\NormalTok{ each drug }\KeywordTok{in}\NormalTok{ user\_drug\_list:}
+\NormalTok{    interactions }\OperatorTok{=}\NormalTok{ fetch\_interactions(drug)}
+    \ControlFlowTok{for}\NormalTok{ each interaction }\KeywordTok{in}\NormalTok{ interactions:}
+        \ControlFlowTok{for}\NormalTok{ each other\_drug }\KeywordTok{in}\NormalTok{ user\_drug\_list:}
+            \ControlFlowTok{if}\NormalTok{ other\_drug }\OperatorTok{!=}\NormalTok{ drug:}
+                \ControlFlowTok{if}\NormalTok{ other\_drug }\KeywordTok{in}\NormalTok{ interaction.name }\KeywordTok{or} 
+\NormalTok{                   is\_similar(other\_drug, interaction.name):}
+\NormalTok{                    add\_to\_results(drug, other\_drug, interaction)}
+\end{Highlighting}
+\end{Shaded}
+
+Food and lifestyle interaction checking fetches data from a separate
+Drugs.com endpoint. The scraper parses HTML to extract interaction
+names, severity levels, hazard ratings, plausibility scores, and
+detailed descriptions. Disease interaction checking works similarly,
+extracting applicable conditions and clinical recommendations.
+
+The AI translation feature uses a locally deployed Ollama instance
+running the Llama 3.2 model. When you request a translation, the system
+sends the professional description to Ollama with a prompt instructing
+it to act as a clinical physician translating for patient comprehension.
+The translated text caches in the database to avoid repeated API calls.
+The translation function appears below:
+
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\KeywordTok{def}\NormalTok{ translate\_professional\_to\_consumer(professional\_description):}
+\NormalTok{    prompt }\OperatorTok{=} \SpecialStringTok{f"""Pretend you are a clinical physician. }
+\SpecialStringTok{    Translate the following professional drug interaction }
+\SpecialStringTok{    description into a more consumer{-}friendly description. }
+\SpecialStringTok{    Write the consumer{-}friendly description only:}
+\SpecialStringTok{    }
+\SpecialStringTok{    }\SpecialCharTok{\{}\NormalTok{professional\_description}\SpecialCharTok{\}}\SpecialStringTok{"""}
+    
+\NormalTok{    response }\OperatorTok{=}\NormalTok{ requests.post(}
+        \SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{OLLAMA\_BASE\_URL}\SpecialCharTok{\}}\SpecialStringTok{/api/generate"}\NormalTok{,}
+\NormalTok{        json}\OperatorTok{=}\NormalTok{\{}\StringTok{"model"}\NormalTok{: }\StringTok{"llama3.2:3b"}\NormalTok{, }
+              \StringTok{"prompt"}\NormalTok{: prompt, }
+              \StringTok{"stream"}\NormalTok{: }\VariableTok{False}\NormalTok{\},}
+\NormalTok{        timeout}\OperatorTok{=}\DecValTok{60}
+\NormalTok{    )}
+    \ControlFlowTok{return}\NormalTok{ response.json().get(}\StringTok{"response"}\NormalTok{, }\StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The doctor-patient relationship system allows patients to request
+oversight from registered doctors. Doctors can view all assigned
+patients and access their search histories. This feature enables medical
+professionals to monitor what drug combinations their patients
+investigate. Patients retain control and can remove doctor assignments
+at any time.
+
+Search history tracking stores complete interaction results as JSON.
+When you click a previous search, the system restores the full results
+without re-scraping. This improves performance and provides consistent
+historical data even if Drugs.com content changes. The search type field
+distinguishes between drug searches, condition searches, drug-drug
+interactions, food interactions, and disease interactions.
+
+\clearpage
+
+\section{Implementation Details}\label{implementation-details}
+
+I chose Python 3 with Flask for the backend because of its simplicity
+and extensive library ecosystem. MySQL serves as the primary database
+due to its reliability and wide support. The frontend uses vanilla HTML,
+CSS, and JavaScript to minimize dependencies and maximize performance.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{./img/welcome_page.png}
+
+}
+
+\caption{\label{fig-welcome}Welcome page showing the PharmaCheck landing
+interface}
+
+\end{figure}%
+
+Figure~\ref{fig-welcome} shows the welcome page that greets users. The
+design emphasizes clarity and medical professionalism. Navigation links
+direct users to registration, login, or the main dashboard.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{./img/dashboard.png}
+
+}
+
+\caption{\label{fig-dashboard}Dashboard interface with interaction
+checking options}
+
+\end{figure}%
+
+The dashboard in Figure~\ref{fig-dashboard} provides access to all
+system features. Users can check drug interactions, view food and
+lifestyle warnings, explore disease interactions, and review their
+search history.
+
+The Flask application structure follows RESTful principles.
+Authentication endpoints handle registration and login at /auth/register
+and /auth/login. Drug search endpoints provide autocomplete at
+/drugs/autocomplete. Interaction checking occurs at
+/check\_drug\_interactions for multi-drug analysis. The API returns JSON
+responses for all endpoints.
+
+SQLAlchemy provides the object-relational mapping layer. I configured
+connection pooling with pool\_size=10 and max\_overflow=20 to handle
+concurrent requests efficiently. Scoped sessions ensure thread safety.
+The teardown\_appcontext decorator automatically closes sessions after
+each request. The database URL reads from environment variables for
+deployment flexibility.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.4\linewidth,height=\textheight,keepaspectratio]{./img/scraping_workflow.png}
+
+}
+
+\caption{\label{fig-scraping}Web scraping workflow from Drugs.com to
+database}
+
+\end{figure}%
+
+Figure~\ref{fig-scraping} illustrates the web scraping workflow. The
+DrugInteractionChecker class manages all scraping operations. When you
+request interactions for a drug, the system first checks the database
+cache. If cached data exists and use\_cache=True, the system returns
+stored results immediately. Otherwise, the scraper fetches fresh data
+from Drugs.com, parses the HTML using BeautifulSoup, extracts
+interaction details, stores them in MySQL, and returns the results.
+
+Brand name to generic name resolution handles cases where drugs have
+multiple names. Prozac and fluoxetine refer to the same medication but
+use different URL patterns on Drugs.com. The scraper checks the drug's
+main page to find the generic name, then uses that for interaction
+lookups. This ensures complete interaction data regardless of which name
+you enter.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.35\linewidth,height=\textheight,keepaspectratio]{./img/drug_checker.png}
+
+}
+
+\caption{\label{fig-checker}Drug interaction checker showing
+severity-coded results}
+
+\end{figure}%
+
+Figure~\ref{fig-checker} displays the interaction checker interface.
+Results appear color-coded by severity. Major interactions show in red.
+Moderate interactions appear in yellow. Minor interactions display in
+green. Each result expands to show full professional and
+patient-friendly descriptions.
+
+Authentication uses bcrypt for password hashing with automatic salt
+generation. JWT tokens encode user\_id and role claims. The
+login\_required decorator validates tokens on protected routes. The
+role\_required decorator restricts certain endpoints to doctors only.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{./img/my_patients.png}
+
+}
+
+\caption{\label{fig-patients}Doctor's patient management view}
+
+\end{figure}%
+
+Figure~\ref{fig-patients} shows the doctor's view of assigned patients.
+Doctors see patient usernames and recent search activity. Clicking a
+patient reveals their complete search history. This enables doctors to
+monitor patient medication research and provide informed guidance.
+
+Initial data loading imports 2,123 conditions and 15,773 drugs from JSON
+files. The import script processes records in batches of 100 to prevent
+memory issues. Progress feedback prints every 100 records. The entire
+import completes in approximately two minutes on standard hardware.
+
+The frontend communicates with the backend through fetch API calls. All
+requests include the JWT token in the Authorization header. Error
+responses display user-friendly messages. Loading indicators show during
+long operations like web scraping or AI translation.
+
+\clearpage
+
+\section{Experiences}\label{experiences}
+
+I encountered several challenges during development. The HTML structure
+on Drugs.com changed multiple times during the project. My initial
+selectors stopped working when the site updated its CSS classes. I
+solved this by implementing multiple fallback selectors in the parsing
+code. The scraper tries several patterns until one succeeds. This
+approach provides resilience against future site changes.
+
+Brand name resolution proved more complex than expected. Searching for
+``Valium'' required finding ``diazepam'' for the interaction lookup. The
+drugs use entirely different URL paths. I implemented a lookup function
+that visits the brand name page, extracts the generic name from the
+HTML, and uses that for subsequent requests. This adds an extra HTTP
+request but ensures accurate results.
+
+Performance became a concern when initial scraping took over two minutes
+per multi-drug check. Users experienced unacceptable wait times. I
+implemented intelligent caching that stores scraped interactions in
+MySQL. Subsequent requests for the same drug return cached data
+instantly. The use\_cache parameter allows forcing fresh data when
+needed. This reduced typical response times to under one second for
+cached drugs.
+
+Schema evolution mid-development taught me the importance of migration
+planning. I initially designed only drug-drug interactions. User
+feedback requested food and disease interactions. Adding the
+FoodInteraction and DiseaseInteraction tables required careful
+migration. I created a separate migration SQL file to add the new
+columns and modify ENUM values. Future projects will include schema
+versioning from the start.
+
+Working with real-world web data reinforced the need for defensive
+programming. HTML parsing can fail in countless ways. Missing elements,
+changed class names, and unexpected content all cause errors. I wrapped
+parsing operations in try-except blocks and provided sensible defaults.
+The system degrades gracefully rather than crashing on unexpected input.
+
+The doctor-patient feature design went through multiple iterations. My
+original design had doctors adding patients to their list. User testing
+revealed this felt intrusive. I reversed the flow so patients request
+doctor oversight. Patients retain control while doctors can still
+monitor those who opt in. This matches the real-world dynamic better.
+
+Several lessons emerged from this project. Real databases require
+planning for change. Schema evolution happens in every long-lived
+application. Building migration support early saves time later. Web
+scraping needs resilience and fallback strategies. External data sources
+change without notice. Caching dramatically improves user experience for
+repeated queries.
+
+Future development could extend PharmaCheck in several directions. A
+background job queue using Celery would allow asynchronous scraping.
+Users could submit requests and receive notifications when results are
+ready. Elasticsearch integration would enable full-text search across
+drug descriptions. A React Native mobile application would reach users
+on smartphones. PDF report generation would let users share interaction
+reports with healthcare providers. Integration with pharmacy systems
+could pre-populate current medications. An analytics dashboard would
+help doctors track patient adherence patterns.
+
+The project demonstrates practical application of database concepts from
+this course. Normalization ensures data integrity. Indexing enables fast
+searches. Foreign key constraints maintain referential integrity.
+Transaction management prevents data corruption. These concepts moved
+from theoretical to practical through hands-on implementation.
+
+\clearpage
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{0}
+\bibitem[\citeproctext]{ref-Ramakrishnan_Gehrke_2003}
+\CSLLeftMargin{{[}1{]} }%
+\CSLRightInline{R. Ramakrishnan and J. Gehrke, \emph{Database management
+systems}, 3rd Edition. McGraw-Hill, 2003.}
+
+\bibitem[\citeproctext]{ref-DrugsComData}
+\CSLLeftMargin{{[}2{]} }%
+\CSLRightInline{Drugs.com, {``Drugs.com drug interaction checker.''}
+\url{https://www.drugs.com/drug_interactions.html}, 2024.}
+
+\bibitem[\citeproctext]{ref-Ollama}
+\CSLLeftMargin{{[}3{]} }%
+\CSLRightInline{Ollama, {``Ollama: Run large language models locally.''}
+\url{https://ollama.ai}, 2024.}
+
+\bibitem[\citeproctext]{ref-Flask}
+\CSLLeftMargin{{[}4{]} }%
+\CSLRightInline{Pallets Projects, {``Flask: A python microframework.''}
+\url{https://flask.palletsprojects.com}, 2024.}
+
+\bibitem[\citeproctext]{ref-SQLAlchemy}
+\CSLLeftMargin{{[}5{]} }%
+\CSLRightInline{SQLAlchemy, {``SQLAlchemy: The python SQL toolkit and
+ORM.''} \url{https://www.sqlalchemy.org}, 2024.}
+
+\end{CSLReferences}
+
+
+
+
+\end{document}

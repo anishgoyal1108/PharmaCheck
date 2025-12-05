@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction Details - PharmaCheck</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a href="../">
+            <img src="../Logo.svg" alt="PharmaCheck Logo" class="logo-title">
+        </a>
+        <a href="../interactions/" class="back-link">← Back to Interactions</a>
+    </header>
+    
+    <div class="main-content">
+        <h1 class="page-title" id="interactionTitle">Interaction Details</h1>
+        
+        <div class="severity-indicator" id="severityIndicator">
+            <span class="severity-badge">Loading...</span>
+        </div>
+        
+        <div class="detail-card" id="detailsCard">
+            <div class="loading">Loading interaction details...</div>
+        </div>
+        
+        <!-- AI Translation Section -->
+        <div class="ai-section" id="aiSection" style="display: none;">
+            <h2>Patient-Friendly Description</h2>
+            <p class="ai-note">This description has been translated by AI for easier understanding.</p>
+            <div class="ai-content" id="aiContent"></div>
+        </div>
+        
+        <div class="actions">
+            <button class="btn-primary" id="translateBtn" onclick="requestTranslation()">
+                ✨ Generate Patient-Friendly Version
+            </button>
+            <a href="../interactions/" class="btn-secondary">View All Interactions</a>
+        </div>
+    </div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>

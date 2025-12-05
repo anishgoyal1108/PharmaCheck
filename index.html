@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCheck - Drug Interaction Checker</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Auth Header -->
+    <div class="auth-header">
+        <div class="user-info-header">
+            <span class="user-role-badge" id="userRoleBadge"></span>
+            <span class="user-name-text" id="userNameText"></span>
+        </div>
+        <div class="header-actions">
+            <a href="dashboard/" class="header-link">Dashboard</a>
+            <button onclick="logout()" class="header-link logout-btn">Sign Out</button>
+        </div>
+    </div>
+
+    <header>
+        <img src="Logo.svg" alt="PharmaCheck Logo" class="logo-title">
+    </header>
+    
+    <div class="form-section">
+        <div class="form-group">
+            <label class="form-label">Drug Being Prescribed</label>
+            <p class="form-hint">Enter the brand name or active ingredient</p>
+            <div class="autocomplete-wrapper">
+                <input id="drugInput" type="text" placeholder="e.g., Prozac, Fluoxetine" autocomplete="off" />
+                <div id="drugAutocomplete" class="autocomplete-dropdown"></div>
+            </div>
+        </div>
+      
+        <div class="form-group">
+            <label class="form-label">Condition Being Treated</label>
+            <p class="form-hint">What condition is this medication for?</p>
+            <div class="autocomplete-wrapper">
+                <input id="conditionInput" type="text" placeholder="e.g., Depression, Anxiety" autocomplete="off" />
+                <div id="conditionAutocomplete" class="autocomplete-dropdown"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Current Medications</label>
+            <p class="form-hint">Select up to 5 medications the patient is currently taking</p>
+            
+            <!-- Multi-selector -->
+            <div class="multi-selector" id="medicationSelector">
+                <div class="selected-medications" id="selectedMedications">
+                    <!-- Selected drugs appear here as tags -->
+                </div>
+                <div class="autocomplete-wrapper">
+                    <input 
+                        id="medicationSearchInput" 
+                        type="text" 
+                        placeholder="Search and add medications..." 
+                        autocomplete="off"
+                    />
+                    <div id="medicationAutocomplete" class="autocomplete-dropdown"></div>
+                </div>
+            </div>
+            <p class="medication-count"><span id="medCount">0</span>/5 medications selected</p>
+        </div>
+        
+        <button onclick="checkDrugInteraction();" id="checkBtn" class="check-btn">
+            <span class="btn-text">Check for Interactions</span>
+            <span class="btn-loading" style="display: none;">Analyzing interactions...</span>
+        </button>
+    </div>
+    
+    <div class="results" id="results"></div>
+</div>
+
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle">Error</h3>
+        <p id="errorMessage"></p>
+    </div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>

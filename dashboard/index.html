@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PharmaCheck</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../">
+                    <img src="../Logo.svg" alt="PharmaCheck Logo" class="sidebar-logo">
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <span class="nav-icon">📊</span>
+                    Overview
+                </a>
+                <a href="/index.html" class="nav-item">
+                    <span class="nav-icon">💊</span>
+                    Drug Interactions
+                </a>
+                <a href="#" class="nav-item" data-section="food-checker">
+                    <span class="nav-icon">🍎</span>
+                    Food/Lifestyle
+                </a>
+                <a href="#" class="nav-item" data-section="disease-checker">
+                    <span class="nav-icon">🏥</span>
+                    Disease Interactions
+                </a>
+                <a href="#" class="nav-item" data-section="history">
+                    <span class="nav-icon">🔍</span>
+                    Search History
+                </a>
+                <a href="#" class="nav-item doctor-only" data-section="patients" style="display: none;">
+                    <span class="nav-icon">👥</span>
+                    My Patients
+                </a>
+                <a href="#" class="nav-item patient-only" data-section="my-doctor" style="display: none;">
+                    <span class="nav-icon">⚕️</span>
+                    My Doctor
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <span class="user-avatar" id="userAvatar">👤</span>
+                    <div class="user-details">
+                        <span class="user-name" id="sidebarUserName">User</span>
+                        <span class="user-role" id="sidebarUserRole">Patient</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Sign Out</button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview-section" class="content-section active">
+                <h1>Welcome back, <span id="welcomeName">User</span>!</h1>
+                <p class="section-subtitle">Here's an overview of your activity</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-icon">🔍</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalSearches">0</span>
+                            <span class="stat-label">Total Searches</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">💊</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="drugSearches">0</span>
+                            <span class="stat-label">Drug Searches</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">⚠️</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="interactionSearches">0</span>
+                            <span class="stat-label">Interaction Checks</span>
+                        </div>
+                    </div>
+                    <div class="stat-card doctor-only" style="display: none;">
+                        <span class="stat-icon">👥</span>
+                        <div class="stat-info">
+                            <span class="stat-number" id="patientCount">0</span>
+                            <span class="stat-label">Patients</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recent-activity">
+                    <h2>Recent Activity</h2>
+                    <div id="recentActivityList" class="activity-list">
+                        <p class="empty-state">Loading recent activity...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Food/Lifestyle Interaction Checker Section -->
+            <section id="food-checker-section" class="content-section">
+                <h1>Food/Lifestyle Interaction Checker</h1>
+                <p class="section-subtitle">Check how food and lifestyle factors may affect your medication</p>
+                
+                <div class="checker-form">
+                    <div class="form-group">
+                        <label for="foodDrugInput">Drug Name</label>
+                        <div class="autocomplete-wrapper">
+                            <input type="text" id="foodDrugInput" placeholder="Enter drug name (e.g., Diazepam, Valium)" autocomplete="off">
+                            <div id="foodDrugAutocomplete" class="autocomplete-dropdown"></div>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="checkFoodInteractions()">
+                        <span id="foodBtnText">Check Food/Lifestyle Interactions</span>
+                        <span id="foodBtnLoading" style="display: none;">Checking...</span>
+                    </button>
+                </div>
+                
+                <div id="foodResults" class="results-container"></div>
+            </section>
+            
+            <!-- Disease Interaction Checker Section -->
+            <section id="disease-checker-section" class="content-section">
+                <h1>Disease Interaction Checker</h1>
+                <p class="section-subtitle">Check how medical conditions may affect your medication</p>
+                
+                <div class="checker-form">
+                    <div class="form-group">
+                        <label for="diseaseDrugInput">Drug Name</label>
+                        <div class="autocomplete-wrapper">
+                            <input type="text" id="diseaseDrugInput" placeholder="Enter drug name (e.g., Diazepam, Valium)" autocomplete="off">
+                            <div id="diseaseDrugAutocomplete" class="autocomplete-dropdown"></div>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="checkDiseaseInteractions()">
+                        <span id="diseaseBtnText">Check Disease Interactions</span>
+                        <span id="diseaseBtnLoading" style="display: none;">Checking...</span>
+                    </button>
+                </div>
+                
+                <div id="diseaseResults" class="results-container"></div>
+            </section>
+            
+            <!-- Search History Section -->
+            <section id="history-section" class="content-section">
+                <h1>Search History</h1>
+                <p class="section-subtitle">View and manage your past searches</p>
+                
+                <div class="history-controls">
+                    <div class="search-filter">
+                        <input type="text" id="historySearch" placeholder="Filter searches..." />
+                    </div>
+                    <button class="btn-danger" onclick="clearAllHistory()">Clear All</button>
+                </div>
+                
+                <div id="historyList" class="history-list">
+                    <p class="empty-state">Loading search history...</p>
+                </div>
+                
+                <div class="pagination" id="historyPagination"></div>
+            </section>
+            
+            <!-- Patients Section (Doctor Only) -->
+            <section id="patients-section" class="content-section doctor-only" style="display: none;">
+                <h1>My Patients</h1>
+                <p class="section-subtitle">View patients who have requested your oversight</p>
+                
+                <div id="patientsList" class="patients-list">
+                    <p class="empty-state">Loading patients...</p>
+                </div>
+            </section>
+            
+            <!-- My Doctor Section (Patient Only) -->
+            <section id="my-doctor-section" class="content-section patient-only" style="display: none;">
+                <h1>My Doctor</h1>
+                <p class="section-subtitle">Select a doctor who can view your search history</p>
+                
+                <div id="currentDoctorInfo" class="current-doctor-card">
+                    <p class="empty-state">Loading...</p>
+                </div>
+                
+                <div class="doctor-select-form">
+                    <h3>Request Doctor Oversight</h3>
+                    <p style="color: #64748b; margin-bottom: 16px;">Search for a doctor by username</p>
+                    <div class="form-group">
+                        <div class="autocomplete-wrapper">
+                            <input type="text" id="doctorSearchInput" placeholder="Type doctor's username..." autocomplete="off">
+                            <div id="doctorSearchResults" class="autocomplete-dropdown"></div>
+                        </div>
+                    </div>
+                    <div id="requestDoctorError" class="error-message"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="index.js"></script>
+</body>
+</html>
+

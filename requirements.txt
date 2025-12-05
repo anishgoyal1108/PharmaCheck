@@ -1,0 +1,26 @@
+# PharmaCheck Dependencies
+
+# Flask and extensions
+Flask==3.0.0
+flask-cors==4.0.0
+
+# Database
+mysql-connector-python==8.2.0
+SQLAlchemy==2.0.23
+PyMySQL==1.1.0
+
+# Authentication
+PyJWT==2.8.0
+bcrypt==4.1.1
+
+# Web scraping
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# Environment and utilities
+python-dotenv==1.0.0
+
+# Development
+pytest==7.4.3
+

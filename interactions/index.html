@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction Results - PharmaCheck</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a href="../">
+            <img src="../Logo.svg" alt="PharmaCheck Logo" class="logo-title">
+        </a>
+        <a href="/index.html" class="back-link">← Back to Search</a>
+    </header>
+    
+    <div class="main-content">
+        <h1 class="page-title">Interactions Identified</h1>
+        <p class="page-subtitle" id="drugInfo">View interactions for the selected medication</p>
+        
+        <!-- Severity Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-dot severity-major"></span>
+                <span>Major</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot severity-moderate"></span>
+                <span>Moderate</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot severity-minor"></span>
+                <span>Minor</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot severity-unknown"></span>
+                <span>Unknown</span>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="drug-drug">
+                💊 Drug-Drug
+                <span class="tab-count" id="drugDrugCount">0</span>
+            </button>
+            <button class="tab" data-tab="food">
+                🍎 Food/Lifestyle
+                <span class="tab-count" id="foodCount">0</span>
+            </button>
+            <button class="tab" data-tab="disease">
+                🏥 Disease
+                <span class="tab-count" id="diseaseCount">0</span>
+            </button>
+        </div>
+        
+        <!-- Drug-Drug Interactions -->
+        <div class="tab-content active" id="drug-drug-content">
+            <div class="interactions-list" id="drugDrugList">
+                <div class="loading">Loading interactions...</div>
+            </div>
+        </div>
+        
+        <!-- Food/Lifestyle Interactions -->
+        <div class="tab-content" id="food-content">
+            <div class="interactions-list" id="foodList">
+                <div class="loading">Loading interactions...</div>
+            </div>
+        </div>
+        
+        <!-- Disease Interactions -->
+        <div class="tab-content" id="disease-content">
+            <div class="interactions-list" id="diseaseList">
+                <div class="loading">Loading interactions...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
